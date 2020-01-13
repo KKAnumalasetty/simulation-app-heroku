@@ -7,7 +7,7 @@ import dash
 import dash_core_components,dash_html_components,dash.dependencies,datetime,plotly
 from dash_core_components import Dropdown,Graph,Slider
 print('dash_core_components',dash_core_components.__version__)
-from dash_html_components import H3,H6,Div,P,A,Label
+from dash_html_components import H3,H6,Div,P,A,Label,Br
 print('dash_html_components',dash_html_components.__version__)
 from dash.dependencies import Input, Output
 # print('dash.dependencies',dash.dependencies.__version__)
@@ -129,9 +129,11 @@ def run_simulation(days,cutoff,target):
 
 app.layout = Div([
         
-        H3('Inventory Management using Discrete Event Simulation'),
-        A('Karthik Anumalasetty- LinkedIn', href="https://www.linkedin.com/in/karthikanumalasetty/", target="_blank"),
-        A('Karthik Anumalasetty- GitHub', href="https://www.linkedin.com/in/karthikanumalasetty/", target="_blank"),
+        H3('Inventory Management using Discrete Event Simulation created by Karthik Anumalasetty'),
+        Div([A('LinkedIn', href="https://www.linkedin.com/in/karthikanumalasetty/", target="_blank", 
+               style={'padding': 10},)]),
+        Div([A('GitHub', href="https://github.com/KKAnumalasetty/simulation-app-heroku", target="_blank", 
+               style={'padding': 10},)]),
        P('Unit Margin = $50 and Lead Time for Purchase Order = 2 days'),
        P('Days to simulate 1 to 30 :'),
        P(id='days-slider-output', style={'margin-top': 20}),
