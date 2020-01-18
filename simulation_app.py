@@ -7,7 +7,7 @@ import dash
 import dash_core_components,dash_html_components,dash.dependencies,datetime,plotly
 from dash_core_components import Dropdown,Graph,Slider
 print('dash_core_components',dash_core_components.__version__)
-from dash_html_components import H3,H6,Div,P,A,Label,Br
+from dash_html_components import H3,H6,Div,P,A,Label,Br,Img
 print('dash_html_components',dash_html_components.__version__)
 from dash.dependencies import Input, Output
 # print('dash.dependencies',dash.dependencies.__version__)
@@ -32,6 +32,8 @@ import plotly.graph_objects as go
 import simpy
 print('simpy version: ',simpy.__version__)
 
+import base64
+
 # import matplotlib.pyplot as plt
 # print('matplotlib',matplotlib.__version__)
 
@@ -46,6 +48,12 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
+
+linkedin_filename = './images/linkedin_logo.png' # replace with your own image
+linkedin_image = base64.b64encode(open(linkedin_filename, 'rb').read())
+
+github_filename = './images/github_logo.jpg' # replace with your own image
+github_image = base64.b64encode(open(github_filename, 'rb').read())
 
 
 
@@ -130,41 +138,58 @@ def run_simulation(days,cutoff,target):
 app.layout = Div([
         
         H3('Inventory Management using Discrete Event Simulation created by Karthik Anumalasetty'),
-        Div([A('LinkedIn', href="https://www.linkedin.com/in/karthikanumalasetty/", target="_blank", 
-               style={'padding': 10},)]),
-        Div([A('GitHub', href="https://github.com/KKAnumalasetty/simulation-app-heroku", target="_blank", 
-               style={'padding': 10},)]),
+        Div([A([Img(
+                src='data:image/png;base64,{}'.format(linkedin_image.decode()),
+                style={
+                    'height' : '4%',
+                    'width' : '4%',
+                    'float' : 'right',
+                    'position' : 'relative',
+                    'padding-top' : 0,
+                    'padding-right' : 0
+                })], href="https://www.linkedin.com/in/karthikanumalasetty/", target="_blank", 
+               )]),
+        Div([A([Img(
+                src='data:image/jpg;base64,{}'.format(github_image.decode()),
+                style={
+                    'height' : '8%',
+                    'width' : '8%',
+                    'float' : 'right',
+                    'padding-top' : 0,
+                    'padding-right' : 0
+                })], href="https://github.com/KKAnumalasetty/simulation-app-heroku", target="_blank", 
+               )]),
        P('Unit Margin = $50 and Lead Time for Purchase Order = 2 days'),
-       P('Days to simulate 1 to 30 :'),
-       P(id='days-slider-output', style={'margin-top': 20}),
-       Slider(
+       Div([P('Days to simulate (1 to 30 days) :')],style={'display': 'inline-block'}),
+       Div([P(id='days-slider-output')],style={'display': 'inline-block','color':'red','padding':'20px','font-size':'160%'}),
+       Div([Slider(
         id='days-slider',
         min=0,
         max=30,
         step=1,
         value=25,
-        updatemode='drag'
-        ),
-       P('Inventory Cutoff level (units 1 to 100) :'),
-       Div(id='inv-cutoff-slider-output', style={'margin-top': 20}),
-       Slider(
+        updatemode='drag',        
+        )],style={"width" : "25%"}),
+       Div([P('Inventory Cutoff level (units 1 to 100) :')],style={'display': 'inline-block'}),
+       Div([P(id='inv-cutoff-slider-output')],style={'display': 'inline-block','color':'red','padding':'20px','font-size':'160%'}),
+       Div([Slider(
         id='inv-cutoff-slider',
         min=0,
         max=100,
         step=1,
         value=32,
         updatemode='drag'
-        ),
-       P('Inventory Target level (units 1 to 100)  :'),
-       Div(id='inv-target-slider-output', style={'margin-top': 20}),
-       Slider(
+        )],style={"width" : "25%"}),
+       Div([P('Inventory Target level (units 1 to 100)  :')],style={'display': 'inline-block'}),
+       Div([P(id='inv-target-slider-output')],style={'display': 'inline-block','color':'red','padding':'20px','font-size':'160%'}),
+       Div([Slider(
         id='inv-target-slider',
         min=0,
         max=100,
         step=1,
         value=75,
         updatemode='drag'
-        ),
+        )],style={"width" : "25%"}),
         Graph(id='my-graph')
         ])
         
