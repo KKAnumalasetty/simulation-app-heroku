@@ -1,7 +1,7 @@
 gunicorn>=19.7.1
 dash==1.7.0
 dash_core_components==1.6.0
-dash_html_components==1.0.2
+dash_html_components==2.0.0
 pandas==0.25.3
 numpy==1.17.4
 pandas_datareader==0.8.1
